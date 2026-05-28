@@ -15,7 +15,7 @@ Scrape **nama, koordinat GPS, alamat, dan jam operasional** dari sebuah Google M
 | 🏠 Ekstrak Alamat | Dari panel detail Google Maps |
 | 🕐 Jam Operasional Lengkap | Klik otomatis untuk buka tabel 7 hari |
 | 📅 Deteksi Hari Tutup | Parsing otomatis hari dengan label "Tutup" |
-| 💾 Output CSV | Langsung siap diimport ke Zpilot / spreadsheet |
+| 💾 Output CSV | Langsung siap diimport ke spreadsheet |
 | 🖥️ Headed Browser | Pakai Chromium visible jadi Google Maps tidak deteksi bot |
 | 🔁 Auto-Scroll | Scroll otomatis untuk memuat semua tempat di list |
 | 🔄 Retry Click | Deteksi klik macet dan retry otomatis |
