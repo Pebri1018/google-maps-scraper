@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# Playwright
+/backend/gmaps_chrome_profile/
+
+# SQLite
+*.sqlite
+*.db
+
+# Output CSV (optional, remove if you want to track)
+spx_jogja_import.csv
+
+# Debug images
+*.png
+debug_screenshots/
+
+# Node
+node_modules/
+dist/
+.next/
+
+# Env
+.env
+.env.local
+.env.production
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Scratch / test files
+scratch/
+test_*.py
