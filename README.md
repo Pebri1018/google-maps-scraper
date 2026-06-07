@@ -2,7 +2,7 @@
 
 Scrape data dari Google Maps secara otomatis — dari **Shared List**, **hasil pencarian (Search Results)**, maupun langsung via **kata kunci** — lalu simpan ke file **CSV** dengan nama dan kolom yang bisa dikustomisasi sepenuhnya.
 
-Kini tersedia **Web UI Minimalis** untuk memudahkan penggunaan tanpa harus berurusan dengan CLI!
+Kini dilengkapi dengan **Web UI Command Generator** untuk mempermudah pengaturan tanpa harus menghafal perintah CLI!
 
 ---
 
@@ -10,7 +10,7 @@ Kini tersedia **Web UI Minimalis** untuk memudahkan penggunaan tanpa harus berur
 
 | Fitur | Keterangan |
 |---|---|
-| 🌐 **Web UI** | Tersedia halaman antarmuka web (React) yang mudah digunakan. |
+| 🌐 **Web UI Builder** | Halaman web untuk meracik perintah scraping dengan sekali klik. |
 | 🔗 **3 Mode Input** | Shared List · Search Results URL · Kata kunci langsung. |
 | 📋 **14 Field Tersedia** | Nama, koordinat, alamat, telepon, website, rating, ulasan, kategori, harga, jam buka, hari tutup, Plus Code, URL Maps. |
 | 🎛️ **Field Kustom** | Pilih data apa saja yang ingin diambil melalui Web UI atau CLI. |
@@ -22,7 +22,9 @@ Kini tersedia **Web UI Minimalis** untuk memudahkan penggunaan tanpa harus berur
 
 ---
 
-## 🚀 Instalasi & Persiapan
+## 🚀 Instalasi & Persiapan (Wajib di Komputer Kamu)
+
+Karena Google Maps akan memblokir aktivitas otomatis dari *Cloud Server* (seperti Vercel), **proses scraping yang sebenarnya tetap harus berjalan di komputermu sendiri.**
 
 1. **Clone Repo & Masuk Folder**
    ```bash
@@ -45,25 +47,23 @@ Kini tersedia **Web UI Minimalis** untuk memudahkan penggunaan tanpa harus berur
 
 ---
 
-## 🌐 Cara Pakai (Mode Web UI) - Rekomendasi
+## 🌐 Cara Pakai: Web UI Command Generator (Rekomendasi)
 
-Agar Web UI yang di-deploy ke Vercel bisa membuka Chrome di laptopmu, kamu harus menyalakan **Local Engine** (Server Lokal) terlebih dahulu.
+Web UI ini dibuat agar kamu dan teman-temanmu tidak perlu pusing menghafal *command prompt*. 
 
-1. Buka terminal, pastikan kamu berada di folder `google-maps-scraper` dan `.venv` sudah aktif.
-2. Jalankan server lokal:
-   ```bash
-   python server.py
-   ```
-   *(Akan muncul tulisan: 🚀 Local Engine is running on http://localhost:5000)*
-3. Sekarang, **buka link Web Vercel kamu** (atau jalankan `npm run dev` di folder `frontend/` jika ingin tes web-nya secara lokal).
-4. Di Web UI, masukkan settingan (Kata kunci, jumlah, nama file) lalu klik **Gas Scrape**.
-5. Chrome akan otomatis terbuka di komputermu, dan log/terminal akan muncul secara *live* di website!
+1. Deploy folder `frontend/` di repositori ini ke **Vercel** (pilih framework: **Vite**).
+2. Bagikan link Vercel tersebut ke siapa saja.
+3. Buka web Vercel tersebut.
+4. Masukkan URL / Kata Kunci, centang kolom data yang diinginkan, dan atur batas hasil.
+5. Klik **Salin Perintah**.
+6. Paste perintah tersebut ke terminal komputermu (pastikan sudah berada di folder project dan `.venv` aktif), lalu tekan **Enter**.
+7. Chrome akan terbuka otomatis dan melakukan scraping!
 
 ---
 
-## 💻 Cara Pakai (Mode Terminal / CLI)
+## 💻 Cara Pakai: Mode Terminal / CLI Langsung
 
-Jika kamu lebih suka menggunakan terminal:
+Jika kamu ingin mengetik langsung di terminal:
 
 ### 1. Pakai Link Shared List
 ```bash
@@ -91,7 +91,6 @@ python gmaps_scraper.py --keyword "warung makan murah jogja" --output warung.csv
 
 * **Browser langsung tutup setelah dibuka:** Jalankan `playwright install chromium`
 * **Google Maps minta login / CAPTCHA:** Selesaikan CAPTCHA secara manual di browser yang muncul. Session-nya akan otomatis tersimpan di `gmaps_chrome_profile/` untuk ke depannya.
-* **Gagal Konek dari Web (Vercel) ke Local Engine:** Pastikan terminal yang menjalankan `python server.py` tidak tertutup.
 * **Hasil scrape hanya sebagian:** Ini wajar karena Google Maps memakai *lazy-load*. Naikkan `--max-results` atau coba perspesifik lagi kata kuncinya.
 
 ---
