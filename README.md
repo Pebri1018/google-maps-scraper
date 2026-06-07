@@ -8,6 +8,20 @@ Scrape data dari Google Maps secara otomatis — dari **Shared List**, **hasil p
 
 | Fitur | Keterangan |
 |---|---|
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+| 🔗 Input URL Shared List | Cukup tempel link Google Maps list kamu |
+| 📍 Ekstrak Koordinat GPS | Presisi tinggi via URL pattern `!3d!4d` |
+| 🏠 Ekstrak Alamat | Dari panel detail Google Maps |
+| 🕐 Jam Operasional Lengkap | Klik otomatis untuk buka tabel 7 hari |
+| 📅 Deteksi Hari Tutup | Parsing otomatis hari dengan label "Tutup" |
+| 💾 Output CSV | Langsung siap diimport ke spreadsheet |
+| 🖥️ Headed Browser | Pakai Chromium visible jadi Google Maps tidak deteksi bot |
+| 🔁 Auto-Scroll | Scroll otomatis untuk memuat semua tempat di list |
+| 🔄 Retry Click | Deteksi klik macet dan retry otomatis |
+=======
+>>>>>>> temp-saved-work
 | 🔗 **3 mode input** | Shared List · Search Results URL · Kata kunci langsung |
 | 📋 **14 field tersedia** | Nama, koordinat, alamat, telepon, website, rating, ulasan, kategori, harga, jam buka, hari tutup, Plus Code, URL Maps |
 | 🎛️ **Field bebas dipilih** | Ambil hanya field yang kamu butuhkan via `--fields` |
@@ -17,6 +31,10 @@ Scrape data dari Google Maps secara otomatis — dari **Shared List**, **hasil p
 | 🔁 **Auto-scroll** | Scroll otomatis untuk memuat semua hasil |
 | 🔄 **Retry click** | Deteksi klik macet dan retry otomatis |
 | 🍪 **Persistent session** | Profile Chrome tersimpan, login/consent cukup sekali |
+<<<<<<< HEAD
+=======
+>>>>>>> 9f79930 (feat: v2.0 - universal scraper with CLI, 14 selectable fields, list/search/keyword modes)
+>>>>>>> temp-saved-work
 
 ---
 
