@@ -8,8 +8,8 @@
 }
 
 body {
-  background-color: var(--color-brand-light);
-  color: var(--color-brand-dark);
+  background-color: #F8FAFC;
+  color: #0F172A;
   font-family: 'Inter', system-ui, sans-serif;
 }
 

@@ -80,62 +80,62 @@ function App() {
       <div className="max-w-4xl w-full flex flex-col gap-6">
         
         <header className="mb-2 text-center md:text-left">
-          <h1 className="text-3xl font-bold tracking-tight text-brand-dark flex items-center justify-center md:justify-start gap-3">
+          <h1 className="text-3xl font-bold tracking-tight text-slate-900 flex items-center justify-center md:justify-start gap-3">
             <MapPin className="text-brand-blue" size={32} />
             Gmaps Scraper Builder
           </h1>
-          <p className="text-brand-dark/70 mt-2 text-sm">
+          <p className="text-slate-500 mt-2 text-sm">
             Gunakan alat ini untuk menghasilkan perintah *scraping* secara otomatis.
           </p>
         </header>
 
         {/* Card: Input */}
-        <div className="bg-white/60 backdrop-blur-md border border-white p-6 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-          <div className="flex gap-4 mb-4 bg-brand-light/50 p-1.5 rounded-2xl">
+        <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm">
+          <div className="flex gap-2 mb-6 bg-slate-100 p-1.5 rounded-xl w-full md:w-max mx-auto md:mx-0">
             <button 
               onClick={() => setMode('auto')}
-              className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium transition-all ${mode === 'auto' ? 'bg-white text-brand-dark shadow-sm' : 'text-brand-dark/60 hover:text-brand-dark'}`}
+              className={`flex-1 md:flex-none py-2 px-4 rounded-lg text-sm font-semibold transition-all ${mode === 'auto' ? 'bg-white text-brand-blue shadow' : 'text-slate-500 hover:text-slate-700'}`}
             >
               Auto Detect
             </button>
             <button 
               onClick={() => setMode('list')}
-              className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium transition-all ${mode === 'list' ? 'bg-white text-brand-dark shadow-sm' : 'text-brand-dark/60 hover:text-brand-dark'}`}
+              className={`flex-1 md:flex-none py-2 px-4 rounded-lg text-sm font-semibold transition-all ${mode === 'list' ? 'bg-white text-brand-blue shadow' : 'text-slate-500 hover:text-slate-700'}`}
             >
               Shared List
             </button>
             <button 
               onClick={() => setMode('search')}
-              className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium transition-all ${mode === 'search' ? 'bg-white text-brand-dark shadow-sm' : 'text-brand-dark/60 hover:text-brand-dark'}`}
+              className={`flex-1 md:flex-none py-2 px-4 rounded-lg text-sm font-semibold transition-all ${mode === 'search' ? 'bg-white text-brand-blue shadow' : 'text-slate-500 hover:text-slate-700'}`}
             >
               Keyword
             </button>
           </div>
 
-          <label className="block text-sm font-semibold mb-2 text-brand-dark">
+          <label className="block text-sm font-bold mb-2 text-slate-700">
             {mode === 'search' ? 'Kata Kunci Pencarian' : 'URL Google Maps / Kata Kunci'}
           </label>
           <div className="relative">
             {mode === 'search' ? (
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-brand-blue/50" size={18} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
             ) : (
-              <Link2 className="absolute left-4 top-1/2 -translate-y-1/2 text-brand-blue/50" size={18} />
+              <Link2 className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
             )}
             <input 
               type="text" 
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               placeholder={mode === 'search' ? "Contoh: warung makan enak di jogja" : "https://maps.app.goo.gl/... atau kata kunci"}
-              className="w-full bg-white border-0 py-3.5 pl-11 pr-4 rounded-2xl text-sm shadow-inner focus:ring-2 focus:ring-brand-cyan focus:outline-none transition-all placeholder-brand-dark/30"
+              className="w-full bg-slate-50 border border-slate-200 py-3 pl-11 pr-4 rounded-xl text-sm focus:bg-white focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 outline-none transition-all placeholder-slate-400 text-slate-800"
             />
           </div>
         </div>
 
         {/* Card: Fields */}
-        <div className="bg-white/60 backdrop-blur-md border border-white p-6 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-          <h3 className="text-sm font-semibold mb-4 text-brand-dark flex items-center gap-2">
+        <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm">
+          <h3 className="text-sm font-bold mb-4 text-slate-800 flex items-center gap-2">
             <Settings2 size={16} className="text-brand-blue" />
-            Pilih Kolom Data yang Ingin Diambil
+            Kolom Data yang Ingin Diambil
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {AVAILABLE_FIELDS.map(field => {
@@ -144,12 +144,12 @@ function App() {
                 <div 
                   key={field.id}
                   onClick={() => toggleField(field.id)}
-                  className={`flex items-center gap-2.5 p-2.5 rounded-xl cursor-pointer transition-all border ${isActive ? 'bg-brand-cyan/20 border-brand-cyan text-brand-dark font-medium' : 'bg-white/50 border-transparent text-brand-dark/60 hover:bg-white'}`}
+                  className={`flex items-center gap-2.5 p-3 rounded-lg cursor-pointer transition-all border ${isActive ? 'bg-brand-blue/5 border-brand-blue text-brand-blue font-semibold' : 'bg-white border-slate-200 text-slate-600 hover:border-brand-blue/50 hover:bg-slate-50'}`}
                 >
                   {isActive ? (
-                    <CheckSquare size={16} className="text-brand-blue" />
+                    <CheckSquare size={16} className="text-brand-blue flex-shrink-0" />
                   ) : (
-                    <Square size={16} className="text-brand-dark/30" />
+                    <Square size={16} className="text-slate-300 flex-shrink-0" />
                   )}
                   <span className="text-xs">{field.label}</span>
                 </div>
@@ -159,24 +159,24 @@ function App() {
         </div>
 
         {/* Card: Output Config */}
-        <div className="bg-white/60 backdrop-blur-md border border-white p-6 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-xs font-semibold mb-2 text-brand-dark">Maksimal Hasil (0 = Ambil Semua)</label>
+            <label className="block text-xs font-bold mb-2 text-slate-700">Maksimal Hasil (0 = Ambil Semua)</label>
             <input 
               type="number" 
               min="0"
               value={maxResults}
               onChange={(e) => setMaxResults(e.target.value)}
-              className="w-full bg-white border-0 py-2.5 px-3 rounded-xl text-sm shadow-inner focus:ring-2 focus:ring-brand-cyan focus:outline-none"
+              className="w-full bg-slate-50 border border-slate-200 py-2.5 px-3 rounded-lg text-sm focus:bg-white focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 outline-none text-slate-800"
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold mb-2 text-brand-dark">Nama File Output</label>
+            <label className="block text-xs font-bold mb-2 text-slate-700">Nama File Output (.csv)</label>
             <input 
               type="text" 
               value={outputCsv}
               onChange={(e) => setOutputCsv(e.target.value)}
-              className="w-full bg-white border-0 py-2.5 px-3 rounded-xl text-sm shadow-inner focus:ring-2 focus:ring-brand-cyan focus:outline-none"
+              className="w-full bg-slate-50 border border-slate-200 py-2.5 px-3 rounded-lg text-sm focus:bg-white focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 outline-none text-slate-800"
             />
           </div>
         </div>
