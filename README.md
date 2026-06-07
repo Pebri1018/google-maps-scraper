@@ -49,15 +49,13 @@ Karena Google Maps akan memblokir aktivitas otomatis dari *Cloud Server* (sepert
 
 ## 🌐 Cara Pakai: Web UI Command Generator (Rekomendasi)
 
-Web UI ini dibuat agar kamu dan teman-temanmu tidak perlu pusing menghafal *command prompt*. 
+Web UI ini dibuat agar kamu tidak perlu pusing menghafal *command prompt*. 
 
-1. Deploy folder `frontend/` di repositori ini ke **Vercel** (pilih framework: **Vite**).
-2. Bagikan link Vercel tersebut ke siapa saja.
-3. Buka web Vercel tersebut.
-4. Masukkan URL / Kata Kunci, centang kolom data yang diinginkan, dan atur batas hasil.
-5. Klik **Salin Perintah**.
-6. Paste perintah tersebut ke terminal komputermu (pastikan sudah berada di folder project dan `.venv` aktif), lalu tekan **Enter**.
-7. Chrome akan terbuka otomatis dan melakukan scraping!
+1. Buka Web UI di: **[LINK_VERCEL_KAMU_NANTI_TARUH_DISINI]**
+2. Masukkan URL / Kata Kunci, centang kolom data yang diinginkan, dan atur batas hasil.
+3. Klik **Salin Perintah**.
+4. Paste perintah tersebut ke terminal komputermu (pastikan sudah berada di folder project dan `.venv` aktif), lalu tekan **Enter**.
+5. Chrome akan terbuka otomatis di komputermu dan melakukan scraping!
 
 ---
 
