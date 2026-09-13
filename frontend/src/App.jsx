@@ -178,6 +178,9 @@ function App() {
               onChange={(e) => setOutputCsv(e.target.value)}
               className="w-full bg-slate-50 border border-slate-200 py-2.5 px-3 rounded-lg text-sm focus:bg-white focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 outline-none text-slate-800"
             />
+            <p className="text-[11px] text-slate-500 mt-2 leading-tight">
+              💡 <b>Tips Resume:</b> Samakan dengan nama file CSV lama yang sudah ada di folder untuk <b>melanjutkan scraping</b> dan <b>skip data duplikat</b> secara otomatis.
+            </p>
           </div>
         </div>
 
