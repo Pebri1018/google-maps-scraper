@@ -143,6 +143,21 @@ Contoh penggunaan:
 # ─────────────────────────────────────────────────────────────────────
 #  Helpers
 # ─────────────────────────────────────────────────────────────────────
+def is_valid_name(name: str) -> bool:
+    """Cek apakah nama tempat valid (bukan koordinat atau pin)."""
+    if not name:
+        return False
+    name_lower = name.lower()
+    if name_lower in ["pin dipasang", "dropped pin"] or "place no longer exists" in name_lower:
+        return False
+    # Cek apakah nama berupa koordinat derajat (misal: 7°49'51.2"S 110°22'02.6"E)
+    if re.search(r'\d+°\d+\'\d+(\.\d+)?\"[NS]\s+\d+°\d+\'\d+(\.\d+)?\"[EW]', name, re.IGNORECASE):
+        return False
+    # Cek apakah nama hanya berupa lat,lng
+    if re.match(r'^-?\d+\.\d+,\s*-?\d+\.\d+$', name):
+        return False
+    return True
+
 def detect_mode(url: str) -> str:
     """Auto-detect mode dari URL."""
     if "maps.app.goo.gl" in url:
@@ -509,12 +524,15 @@ def collect_search_urls(page, max_results: int) -> list:
 # ─────────────────────────────────────────────────────────────────────
 #  CSV Writer
 # ─────────────────────────────────────────────────────────────────────
-def save_csv(rows: list, output_file: str, fields: list):
-    with open(output_file, mode="w", encoding="utf-8-sig", newline="") as f:
+def save_csv(rows: list, output_file: str, fields: list, append: bool = False):
+    mode = "a" if append else "w"
+    with open(output_file, mode=mode, encoding="utf-8-sig", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
-        writer.writeheader()
+        if not append:
+            writer.writeheader()
         writer.writerows(rows)
-    print(f"\n[OK] {len(rows)} data tersimpan → {output_file}")
+    action = "ditambahkan ke" if append else "tersimpan →"
+    print(f"\n[OK] {len(rows)} data {action} {output_file}")
 
 
 # ─────────────────────────────────────────────────────────────────────
@@ -539,6 +557,21 @@ def scrape(url: str, output: str, fields: list, mode: str, max_results: int, hea
     print(f"  Headless   : {headless}")
     print("=" * 62)
     print()
+
+    existing_identifiers = set()
+    file_exists = os.path.isfile(output)
+    if file_exists:
+        try:
+            with open(output, "r", encoding="utf-8-sig") as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    if "maps_url" in row and row["maps_url"]:
+                        existing_identifiers.add(row["maps_url"].strip())
+                    if "name" in row and row["name"]:
+                        existing_identifiers.add(row["name"].strip().lower())
+            print(f"[*] Mode Resume: Ditemukan {len(existing_identifiers)} entri di '{output}'. Data ini akan di-skip.\n")
+        except Exception:
+            file_exists = False
 
     places_data = []
 
@@ -570,7 +603,19 @@ def scrape(url: str, output: str, fields: list, mode: str, max_results: int, hea
             for idx, card in enumerate(cards):
                 try:
                     name_el   = card.locator(".fontHeadlineSmall")
-                    card_name = name_el.inner_text().strip() if name_el.count() else f"Tempat {idx+1}"
+                    card_name = name_el.inner_text().strip() if name_el.count() else ""
+                    
+                    if not card_name:
+                        card_name = f"Tempat {idx+1}"
+
+                    if not is_valid_name(card_name):
+                        print(f"[-] [{idx+1}/{total}] Skip (Nama tidak valid): {card_name}")
+                        continue
+                        
+                    if card_name.lower() in existing_identifiers:
+                        print(f"[-] [{idx+1}/{total}] Skip (Sudah ada di CSV): {card_name[:35]}")
+                        continue
+
                     prev_url  = page.url
 
                     try:
@@ -602,6 +647,10 @@ def scrape(url: str, output: str, fields: list, mode: str, max_results: int, hea
                     if not details.get("name"):
                         details["name"] = card_name
 
+                    existing_identifiers.add(details["name"].lower())
+                    if cur_url:
+                        existing_identifiers.add(cur_url)
+
                     places_data.append(details)
                     print(
                         f"[+] [{idx+1}/{total}] "
@@ -619,6 +668,11 @@ def scrape(url: str, output: str, fields: list, mode: str, max_results: int, hea
 
             for idx, place_url in enumerate(place_urls):
                 try:
+                    clean_url = re.sub(r'\?.*', '', place_url)
+                    if clean_url in existing_identifiers or place_url in existing_identifiers:
+                        print(f"[-] [{idx+1}/{total}] Skip (Sudah ada di CSV): {place_url[:40]}...")
+                        continue
+
                     page.goto(place_url, wait_until="domcontentloaded")
                     page.wait_for_timeout(2500)
 
@@ -631,10 +685,22 @@ def scrape(url: str, output: str, fields: list, mode: str, max_results: int, hea
                     cur_url = page.url
                     details = extract_place_details(page, fields, cur_url)
 
+                    name = details.get("name", f"Tempat {idx+1}")
+                    
+                    if not is_valid_name(name):
+                        print(f"[-] [{idx+1}/{total}] Skip (Nama tidak valid): {name}")
+                        continue
+                        
+                    if name.lower() in existing_identifiers:
+                        print(f"[-] [{idx+1}/{total}] Skip (Sudah ada di CSV): {name[:35]}")
+                        continue
+                        
+                    existing_identifiers.add(name.lower())
+                    existing_identifiers.add(place_url)
+
                     places_data.append(details)
                     lat  = details.get("latitude", "")
                     lng  = details.get("longitude", "")
-                    name = details.get("name", f"Tempat {idx+1}")
                     print(
                         f"[+] [{idx+1}/{total}] "
                         f"{name[:35]:<35} "
@@ -647,9 +713,9 @@ def scrape(url: str, output: str, fields: list, mode: str, max_results: int, hea
         context.close()
 
     if places_data:
-        save_csv(places_data, output, fields)
+        save_csv(places_data, output, fields, append=file_exists)
     else:
-        print("\n[!] Tidak ada data yang berhasil diambil.")
+        print("\n[!] Tidak ada data baru yang ditambahkan.")
 
 
 # ─────────────────────────────────────────────────────────────────────
