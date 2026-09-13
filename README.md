@@ -14,6 +14,9 @@ Kini dilengkapi dengan **Web UI Command Generator** untuk mempermudah pengaturan
 | 🔗 **3 Mode Input** | Shared List · Search Results URL · Kata kunci langsung. |
 | 📋 **14 Field Tersedia** | Nama, koordinat, alamat, telepon, website, rating, ulasan, kategori, harga, jam buka, hari tutup, Plus Code, URL Maps. |
 | 🎛️ **Field Kustom** | Pilih data apa saja yang ingin diambil melalui Web UI atau CLI. |
+| ⏩ **Smart Resume** | Lanjutkan scraping yang terhenti! Otomatis mendeteksi CSV lama dan *skip* tempat yang sudah diambil. Menggunakan mode *Append* agar data tidak tertimpa. |
+| 🛡️ **Anti Duplikat** | Otomatis menghindari toko dobel atau duplikat dalam satu sesi scraping. |
+| 🧹 **Smart Filter** | Otomatis nge-*skip* tempat yang gak punya nama (hanya koordinat), "Pin dipasang", atau tempat yang sudah tutup permanen. |
 | 💾 **Custom CSV** | Tentukan nama file output hasil scraping. |
 | 🔢 **Batas Hasil** | Batasi jumlah tempat yang diambil (misal: 50 tempat saja). |
 | 🖥️ **Headed Browser** | Browser Chromium terlihat agar tidak diblokir/terdeteksi bot oleh Google. |
