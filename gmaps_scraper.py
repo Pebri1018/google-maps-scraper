@@ -526,13 +526,32 @@ def collect_search_urls(page, max_results: int) -> list:
 # ─────────────────────────────────────────────────────────────────────
 def save_csv(rows: list, output_file: str, fields: list, append: bool = False):
     mode = "a" if append else "w"
+    
+    write_fields = fields
+    if append and os.path.exists(output_file):
+        with open(output_file, "r", encoding="utf-8-sig") as f:
+            reader = csv.reader(f)
+            try:
+                write_fields = next(reader)
+            except StopIteration:
+                pass
+                
+    # Smart mapping for common different headers
+    for row in rows:
+        if "lat" in write_fields and "latitude" not in write_fields and "latitude" in row:
+            row["lat"] = row["latitude"]
+        if "lng" in write_fields and "longitude" not in write_fields and "longitude" in row:
+            row["lng"] = row["longitude"]
+        if "reviews" in write_fields and "total_reviews" not in write_fields and "total_reviews" in row:
+            row["reviews"] = row["total_reviews"]
+
     with open(output_file, mode=mode, encoding="utf-8-sig", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
+        writer = csv.DictWriter(f, fieldnames=write_fields, extrasaction="ignore")
         if not append:
             writer.writeheader()
         writer.writerows(rows)
     action = "ditambahkan ke" if append else "tersimpan →"
-    print(f"\n[OK] {len(rows)} data {action} {output_file}")
+    print(f"\n[OK] {len(rows)} data {action} {output_file} (mengikuti format kolom)")
 
 
 # ─────────────────────────────────────────────────────────────────────
